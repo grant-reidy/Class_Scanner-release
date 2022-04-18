@@ -54,7 +54,6 @@ def send_notification(s):
 
 # random params
 maxRange = 100 # assumes that there are no more than 100 instances of a specific class
-send_notification('PHONE MESSAGING IS WORKING')
 
 # install and manage chrome driver
 config = Options()
@@ -143,6 +142,7 @@ for i in range(3, maxRange):
 selector = driver.find_element(By.XPATH, value= final_xpath)
 selector.click()
 
+send_notification('YOUR CLASS IS NOW BEING WATCHED')
 # loop after this
 while (True):
     table_id = driver.find_element(By.XPATH, '/html/body/div[3]/form/table')
