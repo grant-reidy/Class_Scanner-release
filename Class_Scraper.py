@@ -35,8 +35,8 @@ twilio_phone = '' #twilio phone number with country code e.x. +14041234567
 
 # open debugging session on localhost: 9222
 
-# only noftify don't register auto for class
-register = True
+# False if only noftify don't auto register for class
+register = False
 
 # DONT MESS WITH SHIT PAST HERE
 # -------------------------------------------------------------------
