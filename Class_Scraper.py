@@ -9,6 +9,9 @@ from selenium.webdriver.support.ui import Select, WebDriverWait
 from twilio.rest import Client
 from webdriver_manager.chrome import ChromeDriverManager
 
+#YOU SHOULD GO TO MY WEBSITE
+#https://www.grantreidy.com
+
 # user's username and password
 usernameStr = '{username}' # gatech sso username wihtout brackets
 passwordStr = '{password}' # gatech password without brackets
