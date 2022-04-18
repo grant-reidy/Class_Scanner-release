@@ -24,12 +24,16 @@ subj = 'Physics' # exact format as appears on the 'Lookup' Section in OSCAR
 classNum = '2211' # class 4-digit number
 secCode = 'N' # Section Code
 
+# twilio SMS API keys and phone number
+# just google how to do this
+account_sid = '{API_SID}'
+auth_token = '{API_AUTH}'
+twilio_phone = '' #twilio phone number with country code e.x. +14041234567
+
 # DONT MESS WITH SHIT PAST HERE
 # -------------------------------------------------------------------
 
 # twilio oauth
-account_sid = 'AC044e99e97fe2b5dc4f63ec6f18b5547c'
-auth_token = '52c4c6e2b70a863e9908d61d781db48a'
 client = Client(account_sid, auth_token)
 
 def parse_to_list(input):
@@ -44,7 +48,7 @@ def parse_to_list(input):
 def send_notification(s):
     message = client.messages .create(
         body =  s + '. TIME TO REGISTER BOZO',
-        from_ = '+17792612168',
+        from_ = 'twilio_phone',
         to = phone) 
     return message.sid
 
