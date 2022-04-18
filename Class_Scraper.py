@@ -32,7 +32,7 @@ twilio_phone = '' #twilio phone number with country code e.x. +14041234567
 
 # open debugging session on localhost: 9222
 
-# set False if only want to noftify not auto-register for class
+# only noftify don't register auto for class
 register = True
 
 # DONT MESS WITH SHIT PAST HERE
@@ -52,7 +52,7 @@ def parse_to_list(input):
 
 def send_notification(s):
     message = client.messages .create(
-        body =  s + '. TIME TO REGISTER BOZO',
+        body =  s,
         from_ = twilio_phone,
         to = phone) 
     return message.sid
@@ -179,7 +179,7 @@ while (True):
         print("A SPOT HAS OPENED!!!!!!")
         print("Twilio sent: " + send_notification(
             "Class " + fin_class[2] + " " + fin_class[3] + " is " + str(filled) + " of " + str(capacity)
-            + ", Waitlist is " + str(wl_filled) + " of " + str(wl_capacity)
+            + ", Waitlist is " + str(wl_filled) + " of " + str(wl_capacity) + '. TIME TO REGISTER BOZO'
             )
         )
         if register:
@@ -195,7 +195,7 @@ while (True):
         print("A SPOT HAS OPENED!!!!!!")
         print(send_notification(
             "Class " + fin_class[2] + " " + fin_class[3] + " is " + str(filled) + " of " + str(capacity)
-            + ", Waitlist is " + str(wl_filled) + " of " + str(wl_capacity)
+            + ", Waitlist is " + str(wl_filled) + " of " + str(wl_capacity) + '. TIME TO REGISTER BOZO'
             )
         )
         if register:
@@ -205,6 +205,7 @@ while (True):
             selector = driver.find_element(By.XPATH, value= '/html/body/div[3]/form/input[7]')
             selector.click()
             break   
+
 
     time.sleep(10)
     driver.refresh()
