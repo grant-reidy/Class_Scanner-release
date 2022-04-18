@@ -1,0 +1,6 @@
+.vscode
+.DS_Store
+Class_Scraper/*
+!Class_Scraper.py
+!README.md
+!requirements.txt
