@@ -30,6 +30,11 @@ account_sid = '{API_SID}'
 auth_token = '{API_AUTH}'
 twilio_phone = '' #twilio phone number with country code e.x. +14041234567
 
+# open debugging session on localhost: 9222
+
+# set False if only want to noftify not auto-register for class
+register = True
+
 # DONT MESS WITH SHIT PAST HERE
 # -------------------------------------------------------------------
 
@@ -58,6 +63,7 @@ maxRange = 100 # assumes that there are no more than 100 instances of a specific
 # install and manage chrome driver
 config = Options()
 config.add_argument("--headless")
+config.add_argument('--remote-debugging-port=9222')
 driver = webdriver.Chrome(ChromeDriverManager().install(), options= config)
 
 # load gatech sso
@@ -164,19 +170,42 @@ while (True):
 
     capacity = int(fin_class[11]) # index corresponds to associated column
     filled = int(fin_class[12]) # index corresponds to associated column
-        
-    print("Class " + fin_class[2] + " " + fin_class[3] + " is " + str(filled) + " of " + str(capacity))
+    wl_capacity = int(fin_class[14]) # index corresponds to associated column
+    wl_filled = int(fin_class[15]) # index corresponds to associated column   
+    print("Class " + fin_class[2] + " " + fin_class[3] + " is " + str(filled) + " of " + str(capacity) + ", Waitlist is " + str(wl_filled) + " of " + str(wl_capacity))
 
+    # register for course
     if (filled < capacity):
         print("A SPOT HAS OPENED!!!!!!")
-        print(send_notification("Class " + fin_class[2] + " " + fin_class[3] + " is " + str(filled) + " of " + str(capacity)))
-        box = driver.find_element(By.XPATH, value= '/html/body/div[3]/form/table/tbody/tr[' + str(row_value + 1) + ']/td[1]')
-        selector = box.find_element(By.NAME, value='sel_crn')
-        selector.click()
-        selector = driver.find_element(By.XPATH, value= '/html/body/div[3]/form/input[7]')
-        selector.click()
-        break
+        print("Twilio sent: " + send_notification(
+            "Class " + fin_class[2] + " " + fin_class[3] + " is " + str(filled) + " of " + str(capacity)
+            + ", Waitlist is " + str(wl_filled) + " of " + str(wl_capacity)
+            )
+        )
+        if register:
+            box = driver.find_element(By.XPATH, value= '/html/body/div[3]/form/table/tbody/tr[' + str(row_value + 1) + ']/td[1]')
+            selector = box.find_element(By.NAME, value='sel_crn')
+            selector.click()
+            selector = driver.find_element(By.XPATH, value= '/html/body/div[3]/form/input[7]')
+            selector.click()
+            break
     
+    # waitlist course
+    if (wl_filled < wl_capacity):
+        print("A SPOT HAS OPENED!!!!!!")
+        print(send_notification(
+            "Class " + fin_class[2] + " " + fin_class[3] + " is " + str(filled) + " of " + str(capacity)
+            + ", Waitlist is " + str(wl_filled) + " of " + str(wl_capacity)
+            )
+        )
+        if register:
+            box = driver.find_element(By.XPATH, value= '/html/body/div[3]/form/table/tbody/tr[' + str(row_value + 1) + ']/td[1]')
+            selector = box.find_element(By.NAME, value='sel_crn')
+            selector.click()
+            selector = driver.find_element(By.XPATH, value= '/html/body/div[3]/form/input[7]')
+            selector.click()
+            break   
+
     time.sleep(10)
     driver.refresh()
 
