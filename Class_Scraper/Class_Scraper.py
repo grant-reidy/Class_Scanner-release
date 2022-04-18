@@ -48,12 +48,13 @@ def parse_to_list(input):
 def send_notification(s):
     message = client.messages .create(
         body =  s + '. TIME TO REGISTER BOZO',
-        from_ = 'twilio_phone',
+        from_ = twilio_phone,
         to = phone) 
     return message.sid
 
 # random params
 maxRange = 100 # assumes that there are no more than 100 instances of a specific class
+send_notification('PHONE MESSAGING IS WORKING')
 
 # install and manage chrome driver
 config = Options()
